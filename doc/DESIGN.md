@@ -98,6 +98,16 @@ A table stores copyright violation reports
 | `detail`    | `unicodeText`   | not null                           | JSON structured detail         |
 | `datetime`  | `datetime(UTC)` | not null, index                    | Datetime of this operation     |
 
+### Table `whitelist`
+
+Whitelist for websites exclued from copyvio checking
+
+| column        | type            | attributes            | comment                 |
+|---------------|-----------------|-----------------------|-------------------------|
+| `id`          | `integer`       | primary key, not null | Table primary key       |
+| `url_pattern` | `unicodeText`   | not null              | Regular expression      |
+| `reason`      | `unicode(64)`   |                       | License or other reason |
+
 
 ## API Design
 
