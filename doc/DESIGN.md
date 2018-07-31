@@ -3,15 +3,21 @@
 - **Python** - backend server and scripts
   - **Flask** - web framework
   - **SQLAlchemy** - ORM
+  - **Alembic** - DB migration
   - **Click** - command line framework
 - **JavaScript** - frontend script running on a MediaWiki site
   - **React** - framework
 - **PostgreSQL** - relationship database
+- **Crontab** - scheduled tasks
 - **Nginx** - web server
 - **Docker** - backend container
 
 
 ## Configuration Design
+
+### DB connection
+
+See DB parameters of `flask-sqlalchemy`
 
 ### Site definition
 
@@ -94,3 +100,30 @@ A table stores copyright violation reports
 
 
 ## API Design
+
+### `SearchEngine` class
+
+A class that defined the general interface to any SearchEngine.
+
+| property/method     | description                                  |
+|---------------------|----------------------------------------------|
+| `query(q, dt_end)`  | Search for a given query                     |
+| `usage_info`        | Structured data of daily usage information   |
+
+This interface can be used to implement Google Search, DuckDuckGo, Bing, Google Book Search, etc.
+
+### `Content` class
+
+A class that defined the general interface for processing content.
+
+
+| property/method         | description                                                    |
+|-------------------------|----------------------------------------------------------------|
+| `get_text()`            | Convert rich-format text to plain text                         |
+| `compare(another)`      | Compare with another `Content` instance and output differences |
+| `usage_info`            | Structured data of daily usage information                     |
+
+`MWContent`, `HTMLContent` can be implemented as subclass of `Content`.
+
+
+
