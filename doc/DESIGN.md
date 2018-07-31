@@ -12,7 +12,6 @@
 - **Nginx** - web server
 - **Docker** - backend container
 
-
 ## Configuration Design
 
 ### DB connection
@@ -25,7 +24,7 @@ See DB parameters of `flask-sqlalchemy`
 |-----------------------|--------|-----------------------------|--------------------------------------------------------------------------------------|
 | `site_name`           | `str`  | not null, unique            | Site name                                                                            |
 | `domain_name`         | `str`  | not null                    | Domain name of the site, for example: `"en.wikipedia.org"`                           |
-| `contlang`            | `str`  | not null                    | Content language of this wiki                                                        |
+| `cont_lang`           | `str`  | not null                    | Content language of this wiki                                                        |
 | `mw_path`             | `str`  | not null, default `'/w'`    | Location of MediaWiki software                                                       |
 | `wiki_path`           | `str`  | not null, default `'/wiki'` | Location of MediaWiki "shortcut" path                                                |
 | `report_page`         | `str`  | not null                    | CopyVio reporting Page name (include namespace); template format is allowed          |
@@ -124,7 +123,8 @@ This interface can be used to implement Google Search, DuckDuckGo, Bing, Google 
 
 ### `Content` class
 
-A class that defined the general interface for processing content.
+A class that defined the general interface for processing content. A `Content` instance should
+be initialized with a `Language` instance and a string of any text content.
 
 
 | property/method         | description                                                 |
@@ -135,9 +135,22 @@ A class that defined the general interface for processing content.
 
 `MWContent`, `HTMLContent` can be implemented as subclass of `Content`.
 
+### `Language` class
+
+A class that defined the general interface of a language.
+
+| property/method               | description                                                 |
+|-------------------------------|-------------------------------------------------------------|
+| `get_code()`                  | Get language code                                           |
+| `get_variants()`              | Get available variants for this language                    |
+| `convert_text(text, variant)` | Convert given string to specified variant                   |
+
+We can just use [Bing Translator](https://gist.github.com/dpapathanasiou/2790853) to implement
+conversion between Simplified & Traditional Chinese.
+
 
 ## Frontend Design
 
 ### Useful MediaWiki APIs
 
-- [**API:Compare**](https://www.mediawiki.org/wiki/API:Compare): easy way to genearte comparison of text
+- [**API:Compare**](https://www.mediawiki.org/wiki/API:Compare): an easy way to genearte comparison of text
