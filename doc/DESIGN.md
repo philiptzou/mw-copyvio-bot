@@ -127,13 +127,17 @@ This interface can be used to implement Google Search, DuckDuckGo, Bing, Google 
 A class that defined the general interface for processing content.
 
 
-| property/method         | description                                                    |
-|-------------------------|----------------------------------------------------------------|
-| `get_text()`            | Convert rich-format text to plain text                         |
-| `compare(another)`      | Compare with another `Content` instance and output differences |
-| `usage_info`            | Structured data of daily usage information                     |
+| property/method         | description                                                 |
+|-------------------------|-------------------------------------------------------------|
+| `get_text()`            | Convert rich-format text to plain text                      |
+| `compare(another)`      | Compare with another `Content` instance and return distance |
+| `usage_info`            | Structured data of daily usage information                  |
 
 `MWContent`, `HTMLContent` can be implemented as subclass of `Content`.
 
 
+## Frontend Design
 
+### Useful MediaWiki APIs
+
+- [**API:Compare**](https://www.mediawiki.org/wiki/API:Compare): easy way to genearte comparison of text
